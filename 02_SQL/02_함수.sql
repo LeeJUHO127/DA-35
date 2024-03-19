@@ -1,3 +1,5 @@
+select concat('$', salary) from emp;
+use hr;
 /* ***********************************************
 단일행 함수: 
 	- 행별로 처리하는 함수. 문자/숫자/날짜/변환 함수 
@@ -25,17 +27,38 @@
  lpad(기준문자열, 길이, 채울문자열), rpad(기준문자열, 길이, 채울문자열): 기준문자열을 길이만큼 늘린 뒤 남는 길이만큼 채울문자열로 왼쪽(lpad), 오른쪽(rpad)에 채운다.
 													   기준문자열 글자수가 길이보다 많을 경우 나머지는 자른다.
 *************************************************************************************************************** */
+select char_length("aaaaa"), char_length('안녕');  -- 글자수 
+select format(10000000, 0); -- 단위 구분자를 붙여준다.
+select format(123456.9876, 3); -- 소수점 두번째 자리 이하에서 반올림. 단위 구분자 붙임.
+select concat(3000, 'a', 1.2);
+select concat(format(1000000,0), '원');
 
+select replace('aaaabbbcccddd', 'aaa', '가');
+
+select left('1234567890', 5); -- 왼쪽 5글자만 조회
+select right('1234567890', 5); -- 오른쪽 5글자만 조회
+select substring('1234567890', 4, 3); -- 4번째 글자부터 3글자 잘라서 조회.
+select substring('1234567890', 4);  -- 글자수 생략->끝까지.
+
+select trim('    aaaa    '), char_length(trim('    aaaa    ')); -- 좌우공백제거
+select ltrim('    aaaa    ') as v, rtrim('    aaaa    ') as v; -- 왼쪽, 오른쪽 공백 제거
+
+select upper('aaaa'), lower('AAAA');
 
 -- EMP 테이블에서 직원의 이름(emp_name)을 모두 대문자, 소문자, 이름 글자수를 조회
+select upper(emp_name), lower(emp_name), char_length(emp_name)
+from emp;
 
-
--- 직원 이름(emp_name) 의 자릿수를 15자리로 맞추고 15자가 안되는 이름의 경우  공백을 앞에 붙여 조회. 
-
+-- 직원 이름(emp_name) 의 자릿수를 15자리로 맞추고 15자가 안되는 이름의 경우  
+-- 공백을 앞에 붙여 조회. 
+select lpad(emp_name, 15, ' '), # (대상, 자릿수, 채울값)
+	   char_length(lpad(emp_name, 15, ' '))
+from emp;
     
---  EMP 테이블에서 이름(emp_name)이 10글자 이상인 직원들의 이름(emp_name)과 이름의 글자수 조회
-
-
+--  EMP 테이블에서 이름(emp_name)이 10글자 이상인 직원들의 이름(emp_name)과 
+--    이름의 글자수 조회
+select emp_name, char_length(emp_name) from emp
+where char_length(emp_name) >= 10;
 
 /* **************************************************************************
 
@@ -49,21 +72,46 @@
  mod(n1, n2): n1 % n2
 
 ************************************************************************** */
+select abs(10), abs(-10);
+select round(1234567.98765); -- 자릿수 생략(0): 소숫점 이하 자리에서 반올림
+select round(1234567.98765, 2); -- 소수점 2번째 자리 이하에서 반올림.
+select round(1234567.98765, -2); -- 자릿수 음수 -> 정부수 반올림
 
+select truncate(1234567.98765, 0); -- 자릿수: 0 - 소숫점 이하를 버린다.
+select truncate(1234567.98765, 2); -- 소숫점 2자리 이하를 버린다.
+select truncate(1234567.98765, -2); -- 100 자리 이하를 버린다.
 
--- EMP 테이블에서 각 직원에 대해 직원ID(emp_id), 이름(emp_name), 급여(salary) 그리고 15% 인상된 급여(salary)를 조회하는 질의를 작성하시오.
+select ceil(99.9999), floor(99.999); -- 내림 , 올림
+select sign(100), sign(0), sign(-200);
+
+-- EMP 테이블에서 각 직원에 대해 직원ID(emp_id), 이름(emp_name), 
+--   급여(salary) 그리고 15% 인상된 급여(salary)를 조회하는 질의를 작성하시오.
 -- (단, 15% 인상된 급여는 올림해서 정수로 표시하고, 별칭을 "SAL_RAISE"로 지정.)
+select emp_id,
+	   emp_name,
+       salary,
+       ceil(salary * 1.15) as "sal_raise"
+from emp;       
 
 
 
 -- 위의 SQL문에서 인상 급여(sal_raise)와 급여(salary) 간의 차액을 추가로 조회 
 -- (직원ID(emp_id), 이름(emp_name), 15% 인상급여, 인상된 급여와 기존 급여(salary)와 차액)
+select emp_id,
+	   emp_name,
+       salary,
+       ceil(salary * 1.15) as "sal_raise",
+       ceil(salary * 1.15) - salary as "차액"
+from emp;
 
 
-
---  EMP 테이블에서 커미션이 있는 직원들의 직원_ID(emp_id), 이름(emp_name), 커미션비율(comm_pct), 커미션비율(comm_pct)을 8% 인상한 결과를 조회.
--- (단 커미션을 8% 인상한 결과는 소숫점 이하 2자리에서 반올림하고 별칭은 comm_raise로 지정)
-
+--  EMP 테이블에서 커미션이 있는 직원들의 직원_ID(emp_id), 이름(emp_name), 
+--      커미션비율(comm_pct), 커미션비율(comm_pct)을 8% 인상한 결과를 조회.
+-- (단 커미션을 8% 인상한 결과는 소숫점  2자리 이하에서 반올림하고 별칭은 comm_raise로 지정)
+select emp_id, emp_name, comm_pct, round(comm_pct * 1.08, 2) "comm_raise"
+from emp
+where  comm_pct is not null;
+		
 
 
 /* ***************************************************************************************************************
@@ -88,32 +136,76 @@
  date_format(일시, 형식문자열): 일시를 원하는 형식의 문자열로 반환
 *************************************************************************************************************** */
 -- 실행시점의 일/시를 조회 함수
-
-
+select now();
+select curdate();
+select curtime();
 -- 날짜 타입에서 년 월 일 조회
-
-
+select year(curdate()), 
+       month(curdate()),
+       day(curdate());
+select year(now()), now();
 -- 시간 타입에서 시 분 초 조회
-
+select hour(curtime()),
+	   minute(curtime()),
+       second(curtime()),
+       curtime();
+select hour(now()); 
 
 -- 특정 기간 만큼 전,후의 일시를 조회
+select adddate(now(), interval 3 month);
+select adddate(now(), interval 3 day);
+
+select subdate(now(), interval 3 quarter);
+select adddate(now(), interval -3 quarter);
+
+select adddate(now(), interval 5 hour);
+
+-- 두 일시의 차이를 계산
+select datediff(curdate(), '2023-03-19'); 
+# 뒤에 날짜에서 앞의 날짜 까지 얼마나 지났는지 -> day(일)
+select datediff('2023-03-19', curdate()); 
+
+select timediff(curtime(), '15:30:10'); # 뒤에서 앞시간 만큼 몇 시간:분:초 지났는지 계산.
+
+-- 요일
+select dayofweek(now()); # 1: 일요일 ~ 7: 토요일
 
 
-
--- EMP 테이블에서 부서이름(dept_name)이 'IT'인 직원들의 '입사일(hire_date)로 부터 10일전', 입사일, '입사일로 부터 10일 후' 의 날짜를 조회. 
--- select adddate(hire_date, interval -10 day), hire_date, adddate(hire_date, interval 10 day)
-
-
--- 부서가 'Purchasing' 인 직원의 이름(emp_name), 입사 6개월전과 입사일(hire_date), 6개월후 날짜를 조회.
+select date_format(now(), '%d/%m/%Y %H시 %i분 %s초 %W %p');
+-- %d: 일, %m: 월, %Y: 년, %H: 시, %i: 분, %s: 초, %W: 요일, %p: 오전/오후
 
 
--- ID(emp_id)가 200인 직원의 이름(emp_name), 입사일(hire_date)를 조회. 입사일은 yyyy년 mm월 dd일 형식으로 출력.
+-- EMP 테이블에서 부서이름(dept_name)이 'IT'인 직원들의 '입사일(hire_date)로 부터 10일전',
+--  입사일, '입사일로 부터 10일 후' 의 날짜를 조회. 
+select  subdate(hire_date, interval 10 day), -- adddate(hire_date, interval -10 day), 
+	    hire_date, 
+        adddate(hire_date, interval 10 day)
+from    emp
+where   dept_name='IT';
 
 
---  각 직원의 이름(emp_name), 근무 개월수 (입사일에서 현재까지의 달 수)를 계산하여 조회. 근무개월수 내림차순으로 정렬.
+-- 부서가 'Purchasing' 인 직원의 이름(emp_name), 입사 6개월전과 입사일(hire_date), 
+--    6개월후 날짜를 조회.
+select  subdate(hire_date, interval 6 month) "입사 6개월전",
+	    hire_date "입사일",
+        adddate(hire_date, interval 6 month) "입사 6개월후"
+from    emp
+where   dept_name = 'Purchasing';
 
 
+-- ID(emp_id)가 200인 직원의 이름(emp_name), 입사일(hire_date)를 조회. 
+--    입사일은 yyyy년 mm월 dd일 형식으로 출력.
+select emp_name, 
+	   date_format(hire_date, '%Y년 %m월 %d일') as "hire_date"
+from   emp
+where  emp_id = 200;
 
+--  각 직원의 이름(emp_name), 근무 개월수 (입사일에서 현재까지의 달 수)를 계산하여 조회. 
+--   근무개월수 내림차순으로 정렬.
+select datediff(curdate(), hire_date) "근무일수", 
+	   timestampdiff(month, hire_date, curdate()) "근무개월수",  #(계산할기준, 일시1-과거, 일시2-미래)
+       timestampdiff(year, hire_date, curdate()) "근무 년수"
+from   emp;
 
 
 /* *************************************************************************************

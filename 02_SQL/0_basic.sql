@@ -3,19 +3,22 @@
 block 주석 - 여러줄 짜리 주석.
 
 SQL문을 실행: control + enter
+파일 열기:  control + shift + o
 */
--- 사용자 계정 생성. 
+-- 사용자 계정 생성. ==> root (1111) 계정으로 연결후 계정 생성. 
 -- 로컬 접속 사용자 계정
 create user 'playdata'@'localhost' identified by '1111';
 -- 원격 접속 사용자 계정
 create user 'playdata'@'%' identified by '1111';
 -- 등록된 사용자 계정 조회.
 select user, host from mysql.user;
+
 -- 생성한 계정에 권한 부여 (모든 권한 ==> 관리자 계정.)
 grant all privileges on *.* to 'playdata'@'localhost';
 grant all privileges on *.* to 'playdata'@'%';
 -- grant 부여할 권한 on Database.테이블  to 계정
 
+-- playdata 계정으로 접속.
 -- database 생성 
 create database testdb;
 -- database들 조회
@@ -62,7 +65,7 @@ drop table if exists member;
 insert into member values ('id-1', 'abc111', '이순신',
 						    2000, 'a@a.com', 'M', 20, '2000-10-02 10:10:20');
 
-insert into member (id, password, name, join_date)
+insert into member (id, password, name, join_date) 
 values ('id-2', '11111', '유관순', '2001-01-02 15:22:33');
 
 select * from member;
