@@ -213,19 +213,34 @@ from   emp;
 ifnull (기준컬럼(값), 기본값): 기준컬럼(값)이 NULL값이면 기본값을 출력하고 NULL이 아니면 기준컬럼 값을 출력
 if (조건수식, 참, 거짓): 조건수식이 True이면 참을 False이면 거짓을 출력한다.
 ************************************************************************************* */
+select ifnull(null, 0); 
+select ifnull(null, '없음');
+
+select if (10 < 0, '크다', '작다');
+-- EMP 테이블에서 직원의 ID(emp_id), 이름(emp_name), 업무(job), 부서(dept_name)을 조회.
+--     부서가 없는 경우 '부서미배치'를 출력.
+use hr;
+select emp_id,
+	   emp_name,
+       job,
+       ifnull(dept_name, '부서미배치') as "dept_name"
+from   emp
+order by dept_name; -- 오름차순(asc 생략), null이 제일 작은 값.
 
 
--- EMP 테이블에서 직원의 ID(emp_id), 이름(emp_name), 업무(job), 부서(dept_name)을 조회. 부서가 없는 경우 '부서미배치'를 출력.
-
-
--- EMP 테이블에서 직원의 ID(emp_id), 이름(emp_name), 급여(salary), 커미션 (salary * comm_pct)을 조회. 커미션이 없는 직원은 0이 조회되록 한다.
-
-
+-- EMP 테이블에서 직원의 ID(emp_id), 이름(emp_name), 급여(salary), 
+-- 커미션 (salary * comm_pct)을 조회. 커미션이 없는 직원은 0이 조회되록 한다.
+select emp_id,
+	   emp_name,
+       salary,
+       comm_pct,
+       format(ifnull(salary * comm_pct, 0), 2) as "commission"
+from   emp;       
 
 /***********************************************
 함수 - 타입변환함수
-cast(값 as 변환할타입)
-convert(값, 변환할타입)
+cast(값 as 변환할타입)    cast('....' as date)
+convert(값, 변환할타입)   convert('...', date)
 
 변환가능 타입
   - BINARY: binary 데이터로 변환 (blob)
@@ -238,43 +253,93 @@ convert(값, 변환할타입)
   - DATATIME: 날짜시간 타입
 	- 정수를 날짜, 시간타입으로 변환할 때는 양수만 가능. (음수는 NULL 반환)
 ***********************************************/
+-- insert into table (birthday) value ('2000-10-02 20:10:20')
+
 -- 시간을 정수형태로 변환   
-
-
+select cast(now() as signed); # 부호있는 정수
+-- 2024-03-20 09:39:57
+select cast(curtime() as signed);
+select convert(curtime(), signed);
 -- 숫자를 날짜로 변환
-
+select cast(20200820 as date);
+select convert(102342, time);
+select convert(3010, time);
 
 -- 숫자를 문자열로 변환
+select cast(2000 as char);
+select convert(now(), char);
 
+select  '10' + '20'; -- '10' '20' 을 정수로 변환 후 계산. (묵시적/암시적 형변환)
+select concat('10', '20');
 
 /* *************************************
 CASE 문
-case문 동등비교
+case문 동등비교 - 하나의 컬럼에 대해서 어떤 값이냐에 따라 출력할 값이 달라지는 경우.
 case 컬럼 when 비교값 then 출력값
               [when 비교값 then 출력값]
               [else 출력값]
               end
               
-case문 조건문
+case문 조건문 - 여러조건에 따라 출력할 값이 달라지는 경우
 case when 조건 then 출력값
        [when 조건 then 출력값]
        [else 출력값]
        end
 
 ************************************* */
+-- EMP테이블에서 급여와 급여의 등급을 조회하는데 급여 등급은 10000이상이면 
+--   '1등급', 10000미만이면 '2등급' 으로 나오도록 조회
+select salary, 
+	   case when salary >= 10000 then '1등급' 
+            when salary < 10000 then '2등급' end as "급여등급"
+from   emp;
 
--- EMP테이블에서 급여와 급여의 등급을 조회하는데 급여 등급은 10000이상이면 '1등급', 10000미만이면 '2등급' 으로 나오도록 조회
+select salary, 
+	   case when salary >= 10000 then '1등급' 
+            else '2등급' end as "급여등급"
+from   emp;
 
+-- EMP 테이블에서 업무(job)이 'AD_PRES'거나 'FI_ACCOUNT'거나 
+--  'PU_CLERK'인 직원들의 ID(emp_id), 이름(emp_name), 업무(job)을 조회.  
+--  업무(job)가 'AD_PRES'는 '대표', 'FI_ACCOUNT'는 '회계', 'PU_CLERK'의 경우 
+--  '구매'가 출력되도록 조회
+select job, 
+	   case job when 'AD_PRES' then '대표'
+				when 'FI_ACCOUNT' then '회계'
+                when 'PU_CLERK' then '구매' 
+                else  ifnull(job, '없음') end as "담당업무"  -- 컬럼명 지정: 원래값 그대로 출력
+from   emp
+where  job in ('AD_PRES', 'FI_ACCOUNT', 'PU_CLERK', 'IT_PROG');
 
--- EMP 테이블에서 업무(job)이 'AD_PRES'거나 'FI_ACCOUNT'거나 'PU_CLERK'인 직원들의 ID(emp_id), 이름(emp_name), 업무(job)을 조회.  
--- 업무(job)가 'AD_PRES'는 '대표', 'FI_ACCOUNT'는 '회계', 'PU_CLERK'의 경우 '구매'가 출력되도록 조회
 
 
 -- EMP 테이블에서 부서이름(dept_name)과 급여 인상분을 조회.
--- 급여 인상분은 부서이름이 'IT' 이면 급여(salary)에 10%를 'Shipping' 이면 급여(salary)의 20%를 'Finance'이면 30%를 나머지는 0을 출력
-
-
+-- 급여 인상분은 부서이름이 'IT' 이면 급여(salary)에 10%를 'Shipping' 
+--            이면 급여(salary)의 20%를 'Finance'이면 30%를 나머지는 0을 출력
+select emp_id, emp_name, dept_name,
+	   case dept_name when 'IT' then salary * 0.1
+					  when 'Shipping' then salary * 0.2
+                      when 'Finance' then salary * 0.3 
+                      else 0 end "급여 인상액"
+                      
+from   emp;
 
 -- EMP 테이블에서 직원의 ID(emp_id), 이름(emp_name), 급여(salary), 인상된 급여를 조회한다. 
--- 단 급여 인상율은 급여가 5000 미만은 30%, 5000이상 10000 미만는 20% 10000 이상은 10% 로 한다.
+-- 단 급여 인상율은 급여가 5000 미만은 30%, 5000이상 10000 미만는 20% 
+-- 10000 이상은 10% 로 한다.
+select emp_id, emp_name, salary,
+	   case when salary < 5000 then salary * 0.3
+		    when salary >= 10000 then salary * 0.1
+            else salary * 0.2 end as "급여 인상액"
+from   emp;
+
+
+-- Shipping, IT, Sales  먼저 나오도록 정렬
+select * from emp
+order by case dept_name when 'Shipping' then 0
+					    when 'IT' then 1
+                        when 'Sales' then 2
+                        else dept_name end;
+
+
 
