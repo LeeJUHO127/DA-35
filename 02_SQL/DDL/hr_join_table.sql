@@ -227,6 +227,13 @@ INSERT INTO salary_grade (grade,low_sal,high_sal) VALUES (5, 20001, 99999);
 
 COMMIT;
 
-SELECT * FROM SALARY_GRADE;
+
+
+
+
+
+
+
+
 
 
