@@ -1,4 +1,4 @@
-
+use hr_join;
 /* 주문_제품 */
 DROP TABLE IF EXISTS order_items;
 
