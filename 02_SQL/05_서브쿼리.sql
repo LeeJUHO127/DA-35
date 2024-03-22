@@ -29,6 +29,7 @@ select emp_id, emp_name, job_id, salary
 from   emp 
 where job_id = (select job_id from emp where emp_id = 120);
 
+select job_id from emp where emp_id = 120;
 -- 직원_id(emp.emp_id)가 115번인 직원과 같은 업무(emp.job_id)를 하고 
 -- 같은 부서(emp.dept_id)에 속한 직원들을 조회하시오.
 select * from emp
@@ -174,6 +175,8 @@ where  salary = (select max(salary) from emp where dept_id = e.dept_id);
 
 
 select * from emp;
+
+select * from emp;
 select max(salary) from emp group by dept_id;
 select * from emp where emp_id=104 ;
 
@@ -204,8 +207,28 @@ where  exists (select * from emp where dept_id = d.dept_id);
 select * from dept d
 where  not exists (select * from emp where dept_id = d.dept_id);
 
+use hr_join;
 -- 주문은 한번도 하지 않은 고객 정보 조회
+select * from customers 
+where not exists(select * from orders where cust_id = customers.cust_id);
+
+select * from orders;
 -- 주문은 한 적이 있는 고객 정보 조회
+select * from customers 
+where exists(select * from orders where cust_id = customers.cust_id);
+
 -- 한번도 팔린 적이 없는 제품 조회
+select * from products
+where not exists (select * from order_items 
+				  where product_id=products.product_id);
 -- 팔린 적이 있는 제품 조회
+select * from products
+where  exists (select * from order_items 
+				  where product_id=products.product_id);
+
+
+
+
+
+
 
