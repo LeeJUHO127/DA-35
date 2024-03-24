@@ -24,7 +24,7 @@ where  c.cust_id = 120;
 --         그가 지금까지 주문한 주문정보중 주문_ID, 주문일, 주문상태 조회
 select c.cust_name, c.address, c.phone_number,
 	   o.order_id, o.order_date, o.order_status
-from   customers c left join orders o on c.cust_id = o.order_id
+from   customers c left join orders o on c.cust_id = o.cust_id
 where  c.cust_id = 110;
  
 -- TODO : 고객 ID가 120인 고객의 정보와 지금까지 주문한 주문정보를 모두 조회.
