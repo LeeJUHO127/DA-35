@@ -30,6 +30,11 @@
             a:nth-child(2n) {/*2의 배수번째 자식 태그인 a elements*/
                 font-size:1.5em;
             }
+            div > a:first-child {/*부모가 div인 a 중에 첫번째 자식 elements*/
+                font-weight:bolder;
+                color:rgb(241, 238, 54);
+            }
+            
         </style>
     </head>
     <!--body: 문서 내용-->
@@ -62,12 +67,14 @@
             <li><a href="https://www.everland.com/web/everland/favorite/zootopia/index.html">에버랜드</a></li>
             <li><a href="https://www.coexaqua.com">코엑스아쿠아리움</a></li>
         </ul>
-        <a href="http://www.naver.com">네이버</a>
-        <a href="http://www.naver.com">다음</a>
-        <a href="http://www.naver.com">구글</a>
-        <a href="http://www.naver.com">구글2</a>
-        <a href="http://www.naver.com">구글3</a>
-        <a href="http://www.naver.com">구글4</a>
+        <div>
+            <a href="http://www.naver.com">네이버</a>
+            <a href="http://www.naver.com">다음</a>
+            <a href="http://www.naver.com">구글</a>
+            <a href="http://www.naver.com">구글2</a>
+            <a href="http://www.naver.com">구글3</a>
+            <a>구글4</a>
+        </div>
         <br>
         <img src="https://www.gereports.kr/wp-content/uploads/2022/02/hybrid_propulsion-820x398.jpg" width="500px"><!--image의 url을 src에 지정.-->
     </body>
