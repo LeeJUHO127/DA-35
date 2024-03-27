@@ -43,6 +43,9 @@ def get_daum_news_list():
         raise Exception(f"요청 실패. 응답코드: {res.status_code}")      
 
 if __name__ == "__main__":
+
+
+    
     result = get_daum_news_list()
     # print(len(result))
     # print(result[0])
