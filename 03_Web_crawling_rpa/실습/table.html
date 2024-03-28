@@ -1,0 +1,62 @@
+<!-- 
+    HTML에 표 만드는 태그 - table
+    table 자식태그: 
+        - thead: header 행(컬럼명)들을 묶어준다.(옵션)
+        - tbody: 표 내용행들을 묶어준다.(옵션)
+        - tfoot: footer 행들(집계결과등)을 묶어준다.(옵션)
+    thead/tbody/tfoot/table 자식태그
+        - tr: 한행을 구성하는 값들을 묶어준다. (한행을 묶어줌.)
+    tr 자식태그
+        - td: 한행의 한열의 값을 설정. text를 넣는다.
+        - th: td와 동일. text를 bold체에 center 정렬. (컬럼명.)
+
+table > tbody > tr > td        
+-->
+<!-- html:5 자동완성 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>주소</th>
+                <th>나이</th>
+            </tr>     
+        </thead>
+        <tbody>
+            <tr>
+                <td>이순신</td>
+                <td>서울</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>유관순</td>
+                <td>30</td>
+                <td>인천</td>
+            </tr>
+            <tr>
+                <td>유관순</td>
+                <td>30</td>
+                <td>인천</td>
+            </tr>
+            <tr>
+                <td>유관순</td>
+                <td>30</td>
+                <td>인천</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>나이평균</th>
+                <td colspan="2">25</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
