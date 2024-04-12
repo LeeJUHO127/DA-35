@@ -4,6 +4,7 @@ save_files/
 text_files/
 text_file/
 files/
+saved_dir/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
