@@ -6,6 +6,11 @@ text_file/
 files/
 saved_dir/
 result/
+aclImdb/
+aclImdb_v1.tar.gz
+
+
+petitions_corpus.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
