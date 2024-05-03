@@ -4,9 +4,25 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay, 
                                      recall_score, precision_score, f1_score, accuracy_score,
                                      PrecisionRecallDisplay, average_precision_score, precision_recall_curve,
-                                     RocCurveDisplay, roc_auc_score, roc_curve)
+                                     RocCurveDisplay, roc_auc_score, roc_curve,
+                                     mean_squared_error, root_mean_squared_error, r2_score)
 
 __version__ = 1.0
+
+def print_regression_metrcis(y, pred, title=None):
+    """회귀 평가지표를 출력하는 함수
+    Parameter
+        y: ndarray - 정답 
+        pred: ndarray - 모델 추정값
+        title: 결과에 대한 제목. default: None
+    Return
+    Exception"""
+    if title:
+        print(title)
+    print("MSE:", mean_squared_error(y, pred))
+    print("RMSE:", root_mean_squared_error(y, pred))
+    print("R Squared:", r2_score(y, pred))
+
 
 def plot_precision_recall_curve(y_proba, pred_proba, estimator_name=None, title=None):
     """Precision Recall Curve 시각화 함수
