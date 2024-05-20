@@ -9,6 +9,7 @@ saved_dir/
 result/
 aclImdb/
 aclImdb_v1.tar.gz
+.env/
 
 
 petitions_corpus.txt
