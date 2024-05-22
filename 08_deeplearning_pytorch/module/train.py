@@ -147,7 +147,11 @@ def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_m
        
         # 한 epoch 학습 종료 후 LR scheduler를 이용해 LR 변경.
         if lr_scheduler is not None:
-            lr_scheduler.step()
+            c_lr = lr_scheduler.get_last_lr()[0]  #변경전 learning rate 값
+            lr_scheduler.step()  # learning rate update
+            n_lr = lr_scheduler.get_last_lr()[0]  # 변경후 lr 값
+            if c_lr != n_lr:
+                print(f"####### Learning rate 를 {c_lr}에서 {n_lr} 로 변경함.")
 
         
         if mode == "binary":
