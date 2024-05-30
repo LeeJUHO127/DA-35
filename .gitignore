@@ -1,3 +1,6 @@
+models/
+runs/
+data/
 saved_modes/
 saved_data/
 daum_news_list/
@@ -11,7 +14,7 @@ aclImdb/
 aclImdb_v1.tar.gz
 .env/
 
-
+*.pth
 petitions_corpus.txt
 
 # Byte-compiled / optimized / DLL files

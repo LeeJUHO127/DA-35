@@ -155,7 +155,6 @@ def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_m
             new_lr = lr_scheduler.get_last_lr()[0]
             if current_lr != new_lr: # 변경되었으면 출력
                 print(f"Learing rate 가 {current_lr}에서 {new_lr}로 변경되었습니다.")
-
         
         if mode == "binary":
             val_loss, val_accuracy = test_binary_classification(val_loader, model, loss_fn, device=device)
