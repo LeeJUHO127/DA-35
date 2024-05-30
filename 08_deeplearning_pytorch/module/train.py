@@ -145,9 +145,16 @@ def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_m
     for epoch in range(epochs):
         train_loss, train_accuracy = train(train_loader, model, loss_fn, optimizer, device=device, mode=mode)
        
-        # 한 epoch 학습 종료 후 LR scheduler를 이용해 LR 변경.
+        # ###################################
+        #  한 epoch 학습 종료 후 LR scheduler를 이용해 LR 변경.
+        #####################################
         if lr_scheduler is not None:
+            # log를 위해 변경전 LR 조회
+            current_lr = lr_scheduler.get_last_lr()[0]
             lr_scheduler.step()
+            new_lr = lr_scheduler.get_last_lr()[0]
+            if current_lr != new_lr: # 변경되었으면 출력
+                print(f"Learing rate 가 {current_lr}에서 {new_lr}로 변경되었습니다.")
 
         
         if mode == "binary":
