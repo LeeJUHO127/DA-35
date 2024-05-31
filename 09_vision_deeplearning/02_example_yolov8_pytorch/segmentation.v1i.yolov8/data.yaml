@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['dog']
+
+roboflow:
+  workspace: kgmyh
+  project: segmentation-5f0rr
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/kgmyh/segmentation-5f0rr/dataset/1
