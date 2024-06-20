@@ -1,0 +1,41 @@
+<!-- window_method.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action='#' method='post' name='f1'>
+        우편번호: <input type='text' name='zipcode'>
+        <input type='button' value='우편번호조회' onclick='popupAddress()'><br>
+        주소: <input type='text' name='address'>
+
+    </form>
+    <input type='button' onclick='windowExam()' value='windowExam'>
+    <input type='button' onclick='window.close()' value='닫기'>
+    
+    <script>
+        function windowExam() {
+            num1 = window.parseInt("10")
+            num2 = parseInt("20")
+            alert(num1+num2)
+            eval('alert(num1+num2)')
+        }
+
+        function popupAddress() {
+            /*
+            새창(popup) 띄우기
+            - window.open('popup url', 'window이름', "window관련 설정")
+            - popup url: 새창의 띄울 url.
+            - window 이름: popup을 띄울 window이름. 
+                          같은 이름의 창이 이미 떠 있으면 있는 창에, 없으면 새로운 창을 띄운다.
+                          "" : 항상 새창.
+            */
+           window.open('popup.html', "address_popup", 'width=500, height=400')
+        }
+    </script>
+
+</body>
+</html>

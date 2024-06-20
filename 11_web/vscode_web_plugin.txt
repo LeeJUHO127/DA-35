@@ -1,0 +1,10 @@
+# 작성한 문서를 WebBrower 에서 열기.
+- Live Server - Ritwick Dey (코드 변경이 바로 바로 적용된다. - 자체 서버를 실행.)
+- open in browser - TechER ( 변경된 내용을 보려면 새로고침을 해야 한다.)
+
+
+- Auto Rename Tag - Jun Han
+- Prettier - Prettier (코드 Formatter)
+- Lorem ipsum - Daniel Imms  (로렘 입슘 텍스트 생성 - 텍스트 예시(폰터나 화면 레이아웃)를 위한 의미없는 텍스트)
+
+- SQLTools - Matheus Teixeira (DB 연동)
