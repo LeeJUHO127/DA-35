@@ -1,0 +1,16 @@
+.color {
+    color:azure;
+    background-color: black;
+}
+.pad {
+    padding:50px;
+}
+.margin {
+    margin-left: 10%; /* 페이지 기준 10% 길이.*/
+    margin-right: 10%;
+    margin-top:50px;
+    margin-bottom:50px;
+}
+.border {
+    border: 5px solid violet;
+}
