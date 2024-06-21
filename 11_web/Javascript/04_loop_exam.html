@@ -11,54 +11,70 @@
             // 반복문 : while, for , do while, for in
 
             function whileExam(num) {
-                list = [];
+                list = []; // 빈배열 생성.
                 while (num < 10) {
+                    // 배열에 값을 추가. 
                     list.push(num);
-                    num++;
+                    num++; // 1증가
                 }
                 alert(list);
             }
+            // whileExam(30)
 
-            function forExam() {
+            function forExam(a) { 
                 list = [];
-                for (num = 1; num < 10; num++) {
+                for (num = a; num < 10; num++) {
                     list.push(num);
                 }
                 alert(list);
             }
-
+            // forExam(200);
+            // while/for - 0번 이상 반복
+            // do while 문 - 1번 이상 반복
             function doWhileExam() {
                 list = [];
                 do {
                     num = parseInt(
                         prompt("짝수를 입력하세요. 홀수입력시 종료합니다.")
                     );
-                    if (num % 2 != 0) {
-                        break;
+                    if (num % 2 != 0) { // num 이 홀수라면
+                        break;          // 반복문 중단.
                     }
                     list.push(num);
                 } while (true);
                 alert(list);
             }
+            // doWhileExam();
+
 
             function forInExam() {
+                // 배열
                 list = ["a", "b", "c", "d", "e"];
-
-                for (idx in list) {
+                console.log(list)
+                console.log(list[1], list[4])
+                for (idx in list) {  // for (변수 in 배열)
+                    // console.log(idx)
                     console.log(idx + "," + list[idx]);
                 }
             }
+            // forInExam();
 
             function forInExam2() {
+                // Javascript 객체(instance) 생성.
+                // JavaScript Object Notation - JSON
                 info = {
                     name: "홍길동",
                     age: 20,
                 };
-                console.log(info.age);
+                // console.log(info.age);
+                // console.log(info["age"])
+                // console.log(info.name, info['name'])
+                // for (변수 in 객체)
                 for (key in info) {
-                    console.log(key + "," + info[key]);
+                    console.log(typeof key, key + "," + info[key]);
                 }
             }
+            forInExam2();
         </script>
     </body>
 </html>

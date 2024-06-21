@@ -22,7 +22,8 @@
             function hello2(name, age) {
                 alert("hello2");
                 alert(`이름: ${name}, 나이: ${age}`);
-                if (!name) { // name의 값이 없다면 (null, undefined, 0, '' => false)
+                if (!name) {
+                    // name의 값이 없다면 (null, undefined, 0, '' => false)
                     alert("이름 입력");
                 }
             }
@@ -37,45 +38,73 @@
             // hello3("홍길동", 20);
             // hello3("홍길동")
             // hello3();
-            hello3(age=30)
-
+            // hello3(age = 30); // keyword argument는 js에는 없다.
 
             //4. 반환값이 있는 함수
             function hello4() {
                 name = prompt("이름을 입력하세요"); //사용자 입력
                 return `이름 : ${name}`;
             }
+            // result = hello4()
+            // console.log(result)
+
 
             //5. Rest Parameter
             function hello5(name, age, ...other) {
                 console.log(name, age);
                 console.log(other);
             }
+            // hello5("이순신", 30, 178, 82, "서울")
 
             //6. 함수 리터럴.
             let hello6 = function (name) {
                 alert(name);
             };
+            
+            // hello6("이순신")  // 함수 리터럴이 할당된 변수를 함수 이름으로 해서 호출
 
             //7. 함수를 argument로 전달.
+            // 함수 == (일급시민)객체 == 값 == 변수에 할당할 수있다.
             function worker(func) {
                 num1 = 10;
                 num2 = 20;
                 result = func(num1, num2);
                 console.log("계산결과: " + result);
             }
-
             function sum(n1, n2) {
                 return n1 + n2;
             }
+            // worker(sum)
+            // worker(function(a, b){
+            //     return a - b
+            // })
+
 
             //8. 화살표 함수
             let arrowFunc1 = (num1, num2) => num1 + num2;
+
+            result = arrowFunc1(100, 200);
+            console.log(result);
 
             let arrowFunc2 = (num1, num2) => {
                 result = num1 - num2;
                 console.log(result);
             };
+            a = arrowFunc2(200, 100)
+            console.log(a)
+            // 파라미터가 없는 경우 빈괄호 처리.
+            let arrowFunc3 = () => {
+                console.log("No Param arrow function")
+            }
+            arrowFunc3()
+
+            let arrowFunc4 = name => `이름: ${name}`
+            console.log(arrowFunc4("홍길동"))
+
+
+            worker((a, b)=>a * b)
+
+
         </script>
     </body>
 </html>
