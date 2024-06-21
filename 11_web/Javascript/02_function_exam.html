@@ -14,22 +14,31 @@
 
             //1. 함수 정의
             function hello1() {
-                alert("경고입니다.");
+                alert("경고입니다."); // Web Browser 경고창 실행.
             }
+            // hello1()
 
             //2. parameter(매개변수) 가 있는 함수
             function hello2(name, age) {
                 alert("hello2");
                 alert(`이름: ${name}, 나이: ${age}`);
-                if (!name) {
+                if (!name) { // name의 값이 없다면 (null, undefined, 0, '' => false)
                     alert("이름 입력");
                 }
             }
+            // hello2("홍길동", 25);
+            // hello2("이순신");
+            // hello2();
 
             //5. 기본값이 있는 파라미터.
             function hello3(name = "무명", age = 0) {
                 console.log(`이름: ${name}, 나이: ${age}`);
             }
+            // hello3("홍길동", 20);
+            // hello3("홍길동")
+            // hello3();
+            hello3(age=30)
+
 
             //4. 반환값이 있는 함수
             function hello4() {
