@@ -1,0 +1,44 @@
+<!-- 07_destructuring_assign.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>구조분해할당 예제</h1>
+        <script>
+            
+
+            // let v1, v2, v3;
+            // arr = [100, 200];
+            // // v1 = arr[0]
+            // // v2 = arr[1]
+            // [v1, v2] = arr;
+            // console.log(v1, v2);
+            // [v1, v2, v3 = -1] = arr; // 변수에 할당할 값이 없으면 default: undefined 를 할당.
+            // //변수=값 형식으로 설정하면 지정한 값을 대입.
+            // console.log(v1, v2, v3);
+            // [v1, v2, ...v3] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            // console.log(v1, v2, v3);
+
+            p = {
+                name: "홍길동",
+                age: 20,
+                address: "서울",
+            };
+            // 변수명==>객체 property name
+            let { name, age, address } = p;
+            console.log(name);
+            console.log(age);
+
+            let {name:my_name, age:my_age, address:my_addr} = p;
+            // name property의 value를 변수 my_name에 할당.
+            console.log(my_name);
+            console.log(my_age);
+            console.log(my_addr);
+         
+        </script>
+    </body>
+</html>

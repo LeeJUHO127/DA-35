@@ -90,29 +90,35 @@
             }
 
             function dateExam() {
-                let today = new Date();
+                let today = new Date(); // 실행시점의 일시
                 console.log(today);
+                // 년, 월(0 ~ 11), 일
+                // 월 설정: 월-1, 월 조회: 월+1
+                console.log(new Date(2010,5,7))   // 2010/6/7
+                console.log(new Date(0,0,0,10,10))// 시, 분, (초)
+                console.log(new Date(2020, 11, 20, 18, 22, 32))
+
                 let str = dateToString(today);
                 console.log(str);
-                // console.log(new Date(2010,5,7))
-                // console.log(new Date(0,0,0,10,10))
+                
             }
+            
             function dateToString(dt) {
-                let year = dt.getFullYear();
+                let year = dt.getFullYear(); // 년도 4자리.
 
-                let month = dt.getMonth() + 1;
-                if (month < 10) month = "0" + month;
+                let month = dt.getMonth() + 1;//월 ( 0 ~ 11)
+                if (month < 10) month = "0" + month;                
 
-                let date = dt.getDate();
+                let date = dt.getDate(); // 일(1 ~ 31)
                 if (date < 10) date = "0" + date;
 
-                let hour = dt.getHours();
+                let hour = dt.getHours(); // 시간(0 ~ 23)
                 if (hour < 10) hour = "0" + hour;
 
-                let minute = dt.getMinutes();
+                let minute = dt.getMinutes(); //분(0 ~ 59)
                 if (minute < 10) minute = "0" + minute;
 
-                let second = dt.getSeconds();
+                let second = dt.getSeconds(); //초(0 ~59)
                 if (second < 10) second = "0" + second;
 
                 return `${year}/${month}/${date} ${hour}:${minute}:${second}`;

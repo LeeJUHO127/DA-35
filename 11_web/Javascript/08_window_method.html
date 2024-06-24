@@ -20,11 +20,22 @@
         </div>
         <script>
             function windowExam() {
-                
+                num1 = window.prompt("num1:")
+                num2 = prompt("num2:")  //window를 생략.
+                num1 = window.parseInt(num1)  // str->int
+                num2 = parseInt(num2)   //window를 생략
+                alert(num1 + num2);   //window를 생략
             }
 
             function popupAddress() {
-
+                /*
+                popup window 를 실행.
+                window.open("url", "창이름", "팝업관련옵션")
+                url: 새창에 보여줄 html 문서의 경로.
+                창이름: 팝업창의 이름. 빈문자열(""): 새로운창을 띄운다. 
+                        같은 이름의 창이 있으면 그 창을 사용.
+                */
+                window.open("09_popup.html", "test", "width=500,height=400")
             }
         </script>
     </body>

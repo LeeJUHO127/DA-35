@@ -14,15 +14,36 @@
                 age: 20,
                 isMarriage: false,
                 "job name": "회사원",
-                hobby: ["게임", "스포츠"],
+                hobby: ["게임", "스포츠"],  // value: 배열.
                 go: function (place) {
-                    alert(place + "에 간다.");
+                    //value: 함수 -> 메소드.
+                    alert(this.name+"이/가 "+place + "에 간다.");
                 },
                 getInfo: function () {
+                    // this: 이 (메소드를 소유한) 객체(파이썬-self 역할.)
+                    // person.getInfo() => this==person
                     info = `이름: ${this.name}, 나이: ${this.age}`;
                     return info;
                 },
             };
+            //조회
+            console.log(person.name, person["name"])
+            console.log(person["job name"]) // 변수명이 식별자 규칙에 어긋날 경우 [] 으로 조회.
+            //변경
+            person.name = "이순신" 
+            console.log(person.name)
+            //property 추가
+            console.log(person.address)
+            person.address = "서울"  //없는 property=값 ->추가
+            console.log(person.address)
+            console.log(person.hobby)
+            console.log(person.hobby.length)
+            console.log(person.hobby[1])
+
+            // 메소드 호출
+            person.go("서울")
+            info = person.getInfo()
+            alert(info)
         </script>
     </body>
 </html>
