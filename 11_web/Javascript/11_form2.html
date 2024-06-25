@@ -6,6 +6,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
@@ -13,9 +14,10 @@
         <div class="container mt-3">
             <form name="f1">
                 취미를 선택하세요 (1개 이상선택)
+
                 <div>
                     <!-- bootstrap checkbox/radio - class="form-check-input"  라벨 클래스는 form-check-label-->
-                    <input type="checkbox" name="hobby" value="독서" class="form-check-input"/>
+                    <input type="checkbox" name="hobby" value="독서" class="form-check-input" />
                     <label>독서</label>
                 </div>
                 <div>
@@ -35,25 +37,75 @@
                     <label>영화</label>
                 </div>
                 <div>
-                    <input type="checkbox" name="allCheck" onclick="checkAll()" class="form-check-input" />
-                    <label>모두선택/해제</label>
+                    <input type="checkbox" name="allCheck" id="allchk" onclick="checkAll()" class="form-check-input" />
+                    <label for="allchk">모두선택/해제</label>
                 </div>
 
                 <p>
                     <input type="button" value="체크박스확인" onclick="checkHobby()" class="btn btn-primary mt-1" />
                 </p>
+                <!-- 
+                radioButton:이름이 같으면 하나의 그룹으로 묶인다.
+                            여러개 중에 하나를 선택할 때 사용.
+                -->
+                <input type="radio" name="r1" />
+                <input type="radio" name="r1" />
+                <input type="radio" name="r1" />
+                <input type="button" value="라디오체크" onclick="checkRadio()" />
             </form>
         </div>
 
         <script>
+            function checkRadio() {
+                let radioList = document.f1.r1; // 같은이름의 태그가 여러개 있으며 배열로 반환.
+                cnt = 0;
+                for (idx in radioList) {
+                    // radion의 check 여부 - checked
+                    if (radioList[idx].checked) {
+                        cnt++;
+                        break; // 하나만 선택 되므로 break
+                    }
+                }
+                if (cnt === 0) {
+                    alert("필수 선택입니다.");
+                }
+            }
             function checkHobby() {
-                
-
+                // 취미 체크박스의 체크 개수를 확인.
+                // hobby checkbox element들을 조회
+                // form 태그 아래 name=hobby 입력태그들
+                //     -> 같은이름의 입력태그가 여러개인경우 배열에 담아서 반환.(Node List)
+                hobbyList = document.f1.hobby;
+                // console.log(hobbyList);
+                // console.log(hobbyList.length);
+                checkCnt = 0; // check 개수를 저장.
+                for (let i = 0; i < hobbyList.length; i++) {
+                    //checkbox, radiobuton의 체크여부를 가지는 속성.
+                    // console.log(hobbyList[i].checked);
+                    if (hobbyList[i].checked) {
+                        checkCnt++;
+                    }
+                }
+                if (checkCnt === 0) {
+                    alert("한개 이상의 취미를 선택하세요.");
+                    return;
+                }
+                // 전송
+                document.f1.submit();
             }
 
             function checkAll() {
-                
-                
+                // allCheck 체크박스의 체크상태에 hobby 체크박스들을 맞춘다.
+                // 체크여부확인: checked 속성. true:체크상태, false: 체크해제상태
+                // checked=true/false : 동적으로 체크상태를 변경할 수있다.
+                // 1. allcheck의 checked 상태를 조회
+                let checkStatus = document.f1.allCheck.checked;
+                // console.log(checkStatus)
+                // 2. hobby 체크박스의 checked 상태를 1에서 조회한 값으로 변경
+                let hobbyList = document.f1.hobby;
+                for (idx in hobbyList) {
+                    hobbyList[idx].checked = checkStatus;
+                }
             }
         </script>
     </body>
