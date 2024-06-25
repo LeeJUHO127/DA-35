@@ -8,6 +8,7 @@
 <body>
 	<div class="container mt-3">
 <button type="button" class="btn btn-primary mb-3" onclick="makeTable();">테이블 만들기</button>
+<button type="button" class="btn btn-primary mb-3" onclick="makeTable2();">테이블 만들기 2</button>
 <table class="table">
 	<thead>
 		<tr>
@@ -25,36 +26,52 @@
 		{name:'유관순', age:25, address:'경기도'},
 		{name:'강감찬', age:43, address:'인천'},
 		{name:'김구', age:32, address:'광주'},
+		
 	]
 	function makeTable(){
 		var tbody = document.getElementById("tbody");
 		//tbody내의 모든 tr(행)들을 삭제
-		
 		while(tbody.hasChildNodes()){
 			tbody.removeChild(tbody.firstChild);
 		}
 		
 		for (idx in person_info) {
-			info = person_info[idx]
-			var tr = document.createElement("tr");
-			var td1 = document.createElement("td");
-			var td2 = document.createElement("td");
-			var td3 = document.createElement("td");
-			var name = document.createTextNode(info['name']);
-			var age = document.createTextNode(info['age']);
-			var addr = document.createTextNode(info['address']);
+			info = person_info[idx] // instance 
+			var tr = document.createElement("tr");// <tr>
+			var td1 = document.createElement("td");// <td>
+			var td2 = document.createElement("td");// <td>
+			var td3 = document.createElement("td");// <td>
+			var name = document.createTextNode(info['name']);// "이순신"
+			var age = document.createTextNode(info['age']);  // 30
+			var addr = document.createTextNode(info['address']);//"서울"
 			
-			td1.appendChild(name);
-			td2.appendChild(age);
-			td3.appendChild(addr);
+			td1.appendChild(name); // td <- 이순신
+			td2.appendChild(age);  // td <- 30
+			td3.appendChild(addr); // td <- 서울
 			
-			tr.appendChild(td1);
+			tr.appendChild(td1); // tr < td세개 추가.
 			tr.appendChild(td2);
 			tr.appendChild(td3);
 			
-			tbody.appendChild(tr);
+			tbody.appendChild(tr); // tbody <- tr
 		}
 		
+	}
+	function makeTable2(){
+		var tbody = document.getElementById("tbody");
+		
+		tag = ""
+		for (idx in person_info) {
+			info = person_info[idx];
+			txt = `<tr>
+					<td>${info['name']}</td>
+					<td>${info['age']}</td>
+					<td>${info['address']}</td>
+				</tr>`
+			tag = tag + txt
+		}
+		// console.log(tag);
+		tbody.innerHTML = tag		
 	}
 </script>
 </body>

@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <title>Insert title here</title>
+
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     </head>
     </head>
     <body class="container mt-3">
@@ -14,7 +16,7 @@
             <input type="button" onclick="innerHTMLtest()" value="innerHTMLtest" />
         </div>
         <div>
-            <input type="text" id="idx" value="삭제할 노드 Index을 적으세요" onfocus="this.value='' " />
+            <input type="number" id="idx" placeholder="삭제할 노드 Index을 적으세요" />
             <input type="button" onclick="deleteNodeByIdx();" value="n번째 노드 삭제" />
             <input type="button" onclick="deleteAllNode	()" value="모든 노드 삭제" />
         </div>
@@ -28,25 +30,57 @@
         
 
         <script>
-            
+            var cnt = 0;
+            var cnt2 = 0;
             function appendChildTest() {
-                
+                // ElementNode 생성. 
+                let p = document.createElement("p") // <p></p>
+                // <p style='background-color:orange'></p>
+                p.style = 'background-color:orange'
+                // TextNode 생성
+                let txt = document.createTextNode(`${cnt++} - New Line`)
+                //p 태그에 txt를 추가.<p>0-New Line</p>
+                p.append(txt)
+                //생성한 p를 div#layer 의 마지막 자식 노드로 추가.
+                let layer = document.getElementById("layer")
+                layer.append(p)
             }
             function insertBeforeTest() {
-                
-				
+                let p = document.createElement('p');
+                p.style = 'background-color:gray'
+                let txt = document.createTextNode(`${cnt2++} - 새 라인`)
+                p.append(txt)
+                let layer = document.getElementById('layer');
+                // 첫번째 자식 노드로 추가.
+                // layer.insertBefore(p, layer.firstElementChild);
+                layer.insertBefore(p, layer.children[2]);				
             }
             function deleteAllNode() {
-                
-				
+                //모든 <p>들을 삭제.
+                let layer = document.getElementById('layer');
+                while (layer.hasChildNodes()) { // 자식노드가 있는 동안
+                    layer.removeChild(layer.firstChild);
+                }
             }
             function deleteNodeByIdx() {
+                let delIndex = document.getElementById('idx').value
+                if (isNaN(delIndex)) { // Not A Number : 숫자가 아니면 True, 숫자면 False
+                    alert("숫자를 넣으세요.");
+                    return
+                }
                 
-				
+				let layer = document.getElementById('layer');
+                layer.removeChild(layer.children[delIndex])
             }
             function innerHTMLtest() {
-                
-				
+                let layer = document.getElementById("layer")
+                alert(layer.innerHTML);// 태그 포함한 하위 내용을 문자열로 반환.
+                alert(layer.innerText);// 태그는 빼고 text 만 문자열로 반환.
+				txt = `이름: <input type="text" name="name"><br>
+                나이: <input type="text" name="age">`
+                layer.innerHTML = txt;  
+                // layer 하위 내용을 통째로 변경. tag는 element node로 처리되서 변경.
+                // layer.innerText = txt;
             }
         </script>
     </body>

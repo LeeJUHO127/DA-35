@@ -39,21 +39,40 @@
         </div>
         <script type="text/javascript">
             function searchByName() {
-                
-                
+                // getElementsByName(name속성값): 배열(Node List)
+                let list = document.getElementsByName("name");
+                console.log(list.length);
+                for (let idx in list) {
+                    list[idx].value = idx; // input 객체의 value값 변경.
+                }
             }
             function searchById() {
-                
-                
+                // getElementById(id속성값): Node객체
+                // let node = document.getElementById("myid");
+                let node = document.querySelector("#myid"); // 반환: Node
+                node.value = "선택된 myid input";
             }
             function searchByTagName(tagName) {
-                
-                
+                // getElementsByTagName(태그이름): 배열(Node List)
+                // let tags = document.getElementsByTagName(tagName);
+                let tags = document.querySelectorAll(tagName); //배열
+                console.log(tags.length);
+                for (let idx in tags) {
+                    //elementNode.nodeName: 태그이름 반환.
+                    tags[idx].value = `${idx} - ${tagName} - ${tags[idx].nodeName}`;
+                }
             }
 
             function searchByClassName(className) {
-                
-                
+                //getElementsByClassName(class속성명): 배열(Node List)
+                // let list = document.getElementsByClassName(className);
+                let list = document.querySelectorAll("a.pink_color");
+                console.log(list.length);
+                for (let idx in list) {
+                    // <tag  style="color:blue;background-color:pink">
+                    list[idx].style = "color:blue;background-color:pink";
+                    console.log(list[idx].nodeName);
+                }
             }
         </script>
     </body>
