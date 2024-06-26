@@ -29,12 +29,43 @@ XMLHttpRequest 객체
         <title>Document</title>
     </head>
     <body>
-        <button id="btn">요청</button>
-        <br /><span id="res"></span>
+        <button id="btn" >요청</button>
+        <br />
+        <span id="res"></span>
 
         <script>
+            const btn = document.getElementById('btn'); // 요청버튼객체 조회.
+            //btn에 event 핸들러를 추가.
+            btn.addEventListener("click", ajaxRequest); //("event명", event핸들러함수)
             function ajaxRequest() {
-                
+                //1. XMLHttpRequest 객체 생성.
+                const xhr = new XMLHttpRequest();
+                //2. callback 함수를 xhr에 등록. onload 속성에 함수를 등록
+                //   서버에서 응답이 오면 호출될 함수.
+                xhr.onload = function() {
+                    if (xhr.status === 200) { //응답상태코드: 200 - OK (정상 응답을 받음.)
+                        //alert(xhr.responseText); //서버에서 응답한 결과 메세지(string)
+                        // json(string) 응답 -> JS 객체로 변환. (JSON.parse())
+                        // JS객체 -> json string : (JSON.stringify())
+                        res = JSON.parse(xhr.responseText);
+                        url = res.url; // res['url']
+                        origin = res.origin //res['origin']
+                        host = res.headers.Host //res['headers']['Host']
+                        txt =  `<b>URL:</b>${url}<br>
+                                <b>Origin:</b>${origin}<br>
+                                <b>Host:</b>${host}<br>
+                                <b>${new Date()}</b>`;
+                        document.getElementById("res").innerHTML = txt;
+
+                    } else {
+                        alert('처리도중 문제가 발생함.'+xhr.status+", "+xhr.statusText)
+                    }
+                }
+                //3. xhr을 이용해서 서버에 요청
+                //3-1 어디에 요청할지 설정. // (http요청방식, 요청url, 비동기요청여부:true-비동기, false-동기)
+                xhr.open("GET", "https://httpbin.org/get", true) 
+                //3-2 요청
+                xhr.send();
             }
         </script>
     </body>
