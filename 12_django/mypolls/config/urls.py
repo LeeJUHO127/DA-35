@@ -21,3 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
 ]
+# http://ip:port/admin/ 그 이후 경로는 -> admin app의 urls.py 를 확인
+# http://ip:port/polls/ 그 이후 경로는 -> polls/urls.py  를 확인
+
+# http://127.0.0.1:8000/polls/  welcome -> welcome은 polls/urls.py를 확인해서 View를 찾는다.

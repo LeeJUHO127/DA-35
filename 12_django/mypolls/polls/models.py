@@ -22,6 +22,7 @@ class Choice(models.Model):
     question = models.ForeignKey(
         Question, # 참조 모델클래스 
         on_delete=models.CASCADE  # 참조 값이 삭제될때 처리방법.
+        # , related_name = "polls_choice_set"  
     )
     def __str__(self):
         return f"{self.id}. {self.choice_text}"

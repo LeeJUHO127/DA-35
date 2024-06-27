@@ -33,3 +33,14 @@
       1. 테이블생성/수정 SQL문 생성.
    2. `python manage.py migrate`
       1. DB에 적용.
+
+## View 구현
+- View는 사용자 요청당 한개씩 정의(함수, 클래스)
+1. app/views.py 에 작성
+   1. 함수(FBV) 또는 클래스(CBV) 로 정의
+2. app/urls.py 에 view를 등록
+   1. 어떤 요청 들어오면 view를 호출할지 설정.
+3. app/templates 에 template을 작성
+   1. template: 응답 페이지. (view함수에서 호출.)
+
+
