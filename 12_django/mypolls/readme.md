@@ -18,7 +18,7 @@
       2. app폴더\urls.py 를 생성. (polls\urls.py)
 4. 관리자 계정(superuser) 생성
    1. 이 프로젝트(web application)의 관리자 계정.
-   2. `python manager.py  migrate`
+   2. `python manage.py  migrate`
    3. `python manage.py createsuperuser`
       1. username(root), email:a@a.com, password(1111)
    4. 서버를 실행(python manage.py runserver)

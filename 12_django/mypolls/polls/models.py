@@ -6,9 +6,9 @@
 from django.db import models
 
 # Question Model 클래스 (질문)
-class Question(models.Model):
+class Question(models.Model): # table생성
     # 변수명 - 컬럼명
-    #  Field 객체(설정) - 컬럼 데이터 타입 (제약조건)
+    # Field 객체(설정) - 컬럼 데이터 타입 (제약조건)
     question_text = models.CharField(max_length=200)  # 문자열 타입 컬럼(varchar(200))
     pub_date = models.DateTimeField(auto_now_add=True)# 날짜/시간타입 (datetime) - auto_now_add=True: insert할 때 일시를 저장.
     def __str__(self):
