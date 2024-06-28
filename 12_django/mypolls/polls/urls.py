@@ -12,6 +12,8 @@ urlpatterns = [
     # path("요청url경로", 실행할 view, name=이 설정의 이름)
     ## http://ip:port/polls/welcome -> views.welcome 호출
     path("welcome", views.welcome, name="welcome_poll"),
+    path("list", views.list, name="list"),
+    path("form/<int:question_id>", views.vote_form, name="vote_form"),
 ]
 # http://ip:port/polls/welcome
 # config.urls : http://ip:port/polls/

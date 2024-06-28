@@ -43,4 +43,17 @@
 3. app/templates 에 template을 작성
    1. template: 응답 페이지. (view함수에서 호출.)
 
+- polls/urls.py(요청경로-view), polls/views.py(view정의) -> open
+- template:  polls/templates/polls 하위에 template파일을 작성.
 
+## Template
+- Template 파일을 저장하는 경로.
+  - app/templates  하위에 저장. (이 디렉토리는 장고 실행환경이 자동으로 인식하는 경로. => 다른 설정 없이 이 아래 파일들은 바로 호출가능.)
+    - 호출: app/templates 다음 하위경로부터 지정.
+    - app/templates/test.html -> "test.html"
+    - app/templates/app/src.html -> "app/src.html"
+  - project 하위에 templates 들을 저장.
+    - 특정 app을 위한 화면이 아니라 project 와 관련된 화면일 경우.
+    - config/settings.py (프로젝트 설정파일) 에 등록
+      - TEMPLATES.DIRS 딕셔너리에 추가.
+      - app/templates 를 제외한 나머지 templates 저장 디렉토리들을 등록.
