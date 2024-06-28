@@ -8,12 +8,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/polls/welcome" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{%url 'polls:list'%}" class="nav-link">설문목록</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'polls:vote_create'%}" class="nav-link">설문등록</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container mt=4">
         <h1>투표 폼</h1>
         <h3>질문: {{question.pk}}. {{question.question_text}}</h3>
-        <form action="요청url-투표처리" method="POST">
+        {% if error_message != None %}
+            <div class="text-danger">
+                {{error_message}}
+            </div>
+        {% endif %}
+        <form action="{% url 'polls:vote' %}" method="POST" onsubmit="return validate()">
+        <!-- question_id를 요청파라미터로 설정. - 보기선택하지 않았을때 질문 재조회를 위해. -->
+        <input type="hidden" name="question_id" value="{{question.pk}}">
+        <!--input type=hidden: 화면에는 안나오면서 요청파라미터로 전송할값을 설정.-->
+        {% csrf_token %}
         {% for choice in question.choice_set.all %}
-            <input type="radio" class="form-check-input"
+            <input type="radio" class="form-check-input choice_radio"
                     name="choice" value="{{choice.pk}}" id="{{choice.pk}}">
             <label for="{{choice.pk}}">{{choice.choice_text}}</label><br>
         {% endfor%}
@@ -22,6 +46,26 @@
                 <button type="reset" class="btn btn-success btn-sm">초기화</button>
             </div>
         </form>
+        <script>
+            function validate() {
+                //보기가 선택되었는지 확인하는 검증 함수.
+                choice_radio = document.querySelectorAll(".choice_radio");
+                check_cnt = 0;
+                for (let idx in choice_radio) {
+                    if (choice_radio[idx].checked) {
+                        check_cnt++;
+                        break;
+                    }
+                }
+                if (check_cnt == 0) {
+                    //check된 보기가 없다.
+                    alert("보기를 선택하고 투표하세요.");
+                    return false;
+                }
+
+            }
+        </script>
     </div>
+
 </body>
 </html>
