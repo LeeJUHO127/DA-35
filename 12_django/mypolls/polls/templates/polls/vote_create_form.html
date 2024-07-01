@@ -13,10 +13,22 @@
     </div>
     <div class="mt-3">
         <button type="button" onclick="addChoice()" class="btn btn-primary">보기추가</button>
+        <button type="button" onclick="deleteChoice()"
+                class="btn btn-danger">보기제거</button>
         <button type="submit" class="btn btn-primary">등록</button>
     </div>
 </form>
 <script>
+    function deleteChoice() {
+        // element 제거 - 부모노드객체.removeChild(삭제할 자식노드)
+        layer = document.getElementById("choice_layer")
+        // 두개 이상일 때만 삭제
+        if (layer.children.length >= 2){
+            layer.removeChild(layer.lastChild)
+        } else {
+            alert("보기가 한개입니다.")
+        }
+    }
     function addChoice() {
         //보기 입력 input을 div#choice_layer에 추가.
         // input element 객체 생성
