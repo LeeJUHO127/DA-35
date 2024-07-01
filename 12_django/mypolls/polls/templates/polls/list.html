@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title%}질문 목록{%endblock title%}
 {%block contents%}
+
 <h1>질문 목록</h1>
 <div class="list-group mt-4">
     
@@ -16,6 +17,51 @@
         <b>등록된 질문이 없습니다.</b>
     {% endfor%}
 </div>
+<!-- 페이징 처리 -->
+<ul class="pagination mt-3 mb-5">
+    {# 이전페이지 그룹 이동 링크#}
+    {% if has_previous %}
+        <!-- 시작 페이지의 이전 페이지가 있다면-->
+        <li class="page-item">
+            <a href="{% url 'polls:list'%}?page={{previous_page_no}}" class="page-link">이전</a>
+        </li>
+    {% else%}
+        <!-- 시작 페이지의 이전 페이지가 없다면-->
+        <li class="page-item">
+            <span class='page-link'>이전</span>
+        </li>
+    {% endif %}
+
+    {# 페이지 링크 #}
+    {% for page in page_range %}
+        {% if page == question_list.number %}
+            {# question_list: Page객체 Page객체.number - 페이지 번호 #}
+            <li class="page-item active">
+                <span class="page-link">{{page}}</span>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a  href="{% url 'polls:list' %}?page={{page}}"
+                    class="page-link">{{page}}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+
+
+    {# 다음페이지 그룹 이동 링크 #}
+    {% if has_next %}
+        <!-- 끝페이지의 다음페이지가 있다면 -->
+        <li class="page-item">
+            <a  href="{% url 'polls:list'%}?page={{next_page_no}}" 
+                class="page-link">다음</a>
+        </li>
+    {% else %}
+        <!-- 끝페이지의 다음페이지가 없다면 -->
+        <li class="page-item">
+            <span class="page-link">다음</span>
+        </li>
+    {% endif %}
+</ul>
 {%endblock contents%}
 
 

@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
 
+## paging 처리
+from django.core.paginator import Paginator
+
 # model class 들 import
 from .models import Question, Choice
 
@@ -23,20 +26,78 @@ def welcome(request):
     print(type(response))
     return  response
 
+
 def list(request):
-    """질문 목록(list)를 제공하는 View"""
-    # 1. DB에서 질문들 조회(전체조회) -> models.Question
-    question_list = Question.objects.all().order_by('-pub_date')
-    # 2. 질문 목록 화면 html을 정의 -> 반환
+    """
+    Paging 처리.
+    context data
+        - 현재 페이지의 데이터 (Page객체)
+        - 현재 페이지가 속한 page group의 시작페이지, 끝페이지 번호.
+        - 시작 페이지의 이전/ 끝 페이지 다음 페이지가 있는지 여부.
+        - 시작 페이지의 이전/ 끝 페이지 다음 페이지 번호        
+    """
+    paginate_by = 10 # Page당 데이터 개수.(한 페이지에서 몇개씩 보여줄지.)
+    page_group_count = 10 # Page group 당 page수.
     
-    return render(
-        request, # HttpRequest(장고실행환경이 전달.-HTTP요청정보)
-        "polls/list.html", # 호출할 template파일의 경로.
-        {"question_list":question_list}, 
-        # Context Data: View가 Template에 전달하는 값. dictionary로 정의.
-    )
-    # render(HttpRequest, template경로, context_data): HttpResponse
-    ## template을 실행해서 응답할 html을 응답데이터로 만들어서 반환.
+    # 사용자가 조회한 페이지(현재 페이지) - queryString (GET방식의 요청파라미터)
+    ### http://127.0.0.1:8000/polls/list?page=3
+    current_page = int(request.GET.get('page', 1))
+
+    # DB에서 Question들 모두 조회 - Paging처리를 위해서는 정렬처리.
+    question_list = Question.objects.all().order_by("-pk")
+    # Paginator객체 생성 - (데이터들, 페이지당데이수)
+    paginator = Paginator(question_list, paginate_by)
+
+    # current_page 가 속한 page group의 시작 페이지, 끝 페이지 조회.
+    start_idx = int((current_page - 1) / page_group_count) * page_group_count
+    end_idx = start_idx + page_group_count
+
+    page_range = paginator.page_range[start_idx : end_idx]
+
+    # context data dictionry 에 template에 전달할 값들 추가.
+    context_data = {
+        "page_range": page_range,  # page group의 페이지 번호들
+        "question_list": paginator.page(current_page), # Page객체
+    }
+
+    ### 현재 페이지가 속한 PageGroup의 시작/끝 페이지를 조회
+    #### -> 시작페이지가 이전페이지가 있는지 여부, 이전페이지 번호
+    #### -> 끝페이지가   다음페이지가 있는지 여부, 다음페이지 번호.
+    start_page = paginator.page(page_range[0]) # Group 시작 Page객체
+    end_page = paginator.page(page_range[-1])  # Group 끝 page객체
+    # 시작 페이지가 이전 페이지가 있는지, 끝 페이지는 다음 페이지가 있는지 확인
+    has_previous = start_page.has_previous()
+    has_next = end_page.has_next()
+    # 시작페이지가 이전 페이지가 있다면
+    if has_previous:
+        context_data['has_previous'] = has_previous
+        context_data['previous_page_no'] = start_page.previous_page_number
+    # 끝 페이지의 다음 페이지가 있다면
+    if has_next:
+        context_data['has_next'] = has_next
+        context_data['next_page_no'] = end_page.next_page_number
+
+    return render(request, "polls/list.html", context_data)
+
+
+
+
+
+## 전체 데이터 조회
+# def list(request):
+#     """질문 목록(list)를 제공하는 View"""
+#     # 1. DB에서 질문들 조회(전체조회) -> models.Question
+#     question_list = Question.objects.all().order_by('-pub_date')
+#     # 2. 질문 목록 화면 html을 정의 -> 반환
+    
+#     return render(
+#         request, # HttpRequest(장고실행환경이 전달.-HTTP요청정보)
+#         "polls/list.html", # 호출할 template파일의 경로.
+#         {"question_list":question_list}, 
+#         # Context Data: View가 Template에 전달하는 값. dictionary로 정의.
+#     )
+#     # render(HttpRequest, template경로, context_data): HttpResponse
+#     ## template을 실행해서 응답할 html을 응답데이터로 만들어서 반환.
 
 # 설문에 응답
 ## 투표양식 응답.  
