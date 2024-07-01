@@ -21,6 +21,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
+    path('account/', include('account.urls')),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
 ]
 ### TemplateView: 단순히 template을 응답할 경우 사용.(응답할 template 경로만 지정.)

@@ -63,3 +63,13 @@
   1. root 디렉토리 아래 저장할 경로를 만들고 전역설정파일 config/settings.py 에 등록
      -  TEMPLATES/DIRS
   2. config/templates 생성(자동인식) 
+
+
+## 사용자 계정 관리
+
+1. 계정관리 app 생성
+   1. `python manage.py startapp account`
+   2. config.urls - accout url 매핑
+   3. account/urls.py
+   4. config.settings - INSTALLED_APP에  accout app등록
+2. 사용자 정의 User 모델클래스를 작성
