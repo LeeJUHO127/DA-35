@@ -57,3 +57,9 @@
     - config/settings.py (프로젝트 설정파일) 에 등록
       - TEMPLATES.DIRS 딕셔너리에 추가.
       - app/templates 를 제외한 나머지 templates 저장 디렉토리들을 등록.
+
+# template
+- 특정 app 포함되지 않는 template 들을 저장할 디렉토리.
+  1. root 디렉토리 아래 저장할 경로를 만들고 전역설정파일 config/settings.py 에 등록
+     -  TEMPLATES/DIRS
+  2. config/templates 생성(자동인식) 

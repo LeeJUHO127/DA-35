@@ -19,6 +19,8 @@ urlpatterns = [
     path('vote_create', views.vote_create, name='vote_create'),
 
 ]
+
+
 # http://ip:port/polls/welcome
 # config.urls : http://ip:port/polls/
 # polls.urls : welcome

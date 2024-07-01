@@ -16,12 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),
 ]
+### TemplateView: 단순히 template을 응답할 경우 사용.(응답할 template 경로만 지정.)
 # http://ip:port/admin/ 그 이후 경로는 -> admin app의 urls.py 를 확인
 # http://ip:port/polls/ 그 이후 경로는 -> polls/urls.py  를 확인
+# http://ip:port/   ==> home.html 응답.
 
 # http://127.0.0.1:8000/polls/  welcome -> welcome은 polls/urls.py를 확인해서 View를 찾는다.
