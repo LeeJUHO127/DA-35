@@ -1,5 +1,6 @@
 # account/views.py
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import User 
 
 # 가입 처리
@@ -29,4 +30,13 @@ def create(request):
 
         if len(errorMessage) != 0: # 검증시 문제가 있다.
             return render(request, "account/join_form.html", 
-                        {"error":errorMessage})
+                        {"error":errorMessage, "name":name})
+        ## 검증 통과 
+        ### DB에 저장. 
+        user = User(username=username, 
+                    password=password, 
+                    name=name,
+                    email=email,
+                    birthday=birthday)
+        user.save() # insert
+        return redirect(reverse("home"))
