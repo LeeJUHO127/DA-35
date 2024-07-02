@@ -7,12 +7,12 @@ class User(AbstractUser):
     # Field(table attribute)를 설정
     ## username, password -> AbstractUser에 정의되어 있으므로 선언안함.
     ##    추가 field들을 정의
-    name = models.CharField(verbose_name="이름", max_length=50)
+    name = models.CharField(verbose_name="사용자이름", max_length=50)
     email = models.EmailField(verbose_name="Email", max_length=100)
     birthday = models.DateField(
         verbose_name="생일",
         null=True,    # NULL을 허용하는 컬럼. (default: False)
-        blank=True,   # null의 상태와 동일 지정.(default: False)
+        blank=True,   # 입력 form관련 설정 - 빈값("")이 요청파라미터로 넘어와도 검증 통과된다.(default: False)
         )
     # 파일 - 이미지파일.
     # profile_img = models.ImageField(

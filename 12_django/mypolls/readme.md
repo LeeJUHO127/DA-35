@@ -83,3 +83,13 @@
       3. 관리자 계정 생성
          1. python manage.py createsuperuser
    5. account/templates/account 디렉토리 생성
+
+
+
+# django-bootstrap5
+- django template에 bootstrap 을 추가해주는 library
+- {{form}} 대신 사용.
+  - `pip install django-bootstrap5`
+  - config.setting : INSTALLED_APP 에 `django_bootstrap5`
+  - django_bootrap이 제공하는 template 태그들을 로딩
+    - {% load django_bootstrap5 %}

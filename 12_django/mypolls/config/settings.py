@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls',
     'account',
+    'django_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ################################
 AUTH_USER_MODEL = "account.User"  # AbstractUser 클래스 이름.
 
+###############################
+# 로그인 관련 설정
+###############################
+LOGIN_URL = '/account/login'
+LOGIN_REDIRECT_URL = '/' # LoginView 사용시 로그인 성공후 이동할 페이지
+LOGOUT_REDIRECT_URL = '/'# LogoutView 사용시 로그아웃 처리후 이동할 페이지.
 
