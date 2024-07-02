@@ -69,7 +69,17 @@
 
 1. 계정관리 app 생성
    1. `python manage.py startapp account`
-   2. config.urls - accout url 매핑
+   2. config.urls - account url 매핑
    3. account/urls.py
    4. config.settings - INSTALLED_APP에  accout app등록
 2. 사용자 정의 User 모델클래스를 작성
+   1. account/models.py
+   2. account/admin.py  에 등록 (관리자 앱에서 관리할 수있도록 등록.)
+   3. config/settings.py 모델에 작성한 AbstractUser 를 등록 (시스템에서 사용하는 User모델을 우리가 만든 모델 클래스로 변경.)
+      1. AUTH_USER_MODEL = "account.모델클래스이름"
+   4. DB에 적용
+      1. python manage.py makemigrations
+      2. python manage.py migrate
+      3. 관리자 계정 생성
+         1. python manage.py createsuperuser
+   5. account/templates/account 디렉토리 생성
