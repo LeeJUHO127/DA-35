@@ -7,7 +7,7 @@
 
 from django import forms
 # User(사용자)를 관리하는 ModelForm은 django 에서 제공하는 Form을 상속받아서 구현.
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import User
 
@@ -22,9 +22,9 @@ class CustomUserCreateForm(UserCreationForm):
     password2 = forms.CharField(label="Password확인", 
                                 widget=forms.PasswordInput(), 
                                 help_text="비밀번호 확인을 위해 이전과 동일한 비밀번호를 입력하시오.")
-   # widget: 입력양식의 태그를 설정. 
-   #(각Field들은 기본 태그(widget)가 있는데 다른 것을 사용경우 widget설정을 한다.)
-   #(ex: CharField의 기본 widget은 TextInput (input type=text). 문자열 입력 태그로 password, textarea를 사용할 경우 widget 지정.
+    # widget: 입력양식의 태그를 설정. 
+    #(각Field들은 기본 태그(widget)가 있는데 다른 것을 사용경우 widget설정을 한다.)
+    #(ex: CharField의 기본 widget은 TextInput (input type=text). 문자열 입력 태그로 password, textarea를 사용할 경우 widget 지정.
 
     class Meta:
         # ModelForm과 연결된 Model 클래스 지정. 
@@ -35,6 +35,9 @@ class CustomUserCreateForm(UserCreationForm):
         fields = ["username", "password1", "password2", "name", "email", "birthday", "profile_img"]
         # 지정한 field들을 제외한 나머지 field들을 form field로 정의
         # exclude = ["field명"] 
+        widgets = {
+            "birthday":forms.DateInput(attrs={"type":"date"}) # attrs: 태그의 attribute  설정.
+        }
         
 ## 패스워드변경 Form - PasswordChangeForm 상속해서 구현.
 from django.contrib.auth.forms import PasswordChangeForm
@@ -52,3 +55,18 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         label="새 패스워드 확인", 
         widget=forms.PasswordInput() # 태그의 attribute 설정: attr={"attr":value}
     )
+
+## User 정보 수정 Form (UserChangeForm 상속-username, password관련변경)
+class CustomUserChangeForm(UserChangeForm):
+    # password 항목은 안나오도록 변경
+    password = None
+
+    class Meta:
+        model = User
+        # 변경할 필드
+        fields = ["name", "email", "birthday", "profile_img"]
+        # form field의 widget 변경 
+        widgets = {
+            "birthday":forms.DateInput(attrs={"type":"date"})
+            # <input type='date'>
+        }

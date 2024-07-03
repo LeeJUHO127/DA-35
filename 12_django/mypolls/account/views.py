@@ -149,3 +149,48 @@ def change_password(request):
                 request, 'account/password_change.html',
                 {'form':form, 'errorMessage':'패스워드를 다시 입력하세요.'}
             )
+
+## 사용자 정보를 수정.
+### GET - 수정폼(원래 입력값들이 폼필드에 나와야 한다.)
+### POST - 수정처리 (로그인한사용자 정보 수정 -> session 정보를 update)
+
+from .forms import CustomUserChangeForm
+@login_required # 로그인한 사용자만 요청가능.
+def user_update(request):
+    if request.method == "GET":
+        # User객체를 넣어서 생성. 
+        ## 일반적인 수정의 경우는 DB에서 조회한 결과 Model객체를 넣어서 생성.
+        ##### ItemForm(Item.object.get(pk=pk))
+        form = CustomUserChangeForm(instance=request.user)
+        return render(request, "account/update.html", {"form":form})
+    elif request.method == "POST":
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            # 저장, User 로그인 정보 갱신
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect(reverse('account:detail'))
+        else:
+            return render(request, "account/update.html", {"form":form})
+
+# 탈퇴
+@login_required  
+def user_delete(request):
+    # DB에서 user 정보 삭제 -> logout
+    request.user.delete() # request의 user를 이용해 delete처리.
+    # 일반적인 항목의 데이터를 DB에서 삭제 -> 
+    #          삭제할 정보의 ID(path/request parameter)를 받아서 select 한 뒤에 삭제처리
+    #  item = Item.objects.get(pk=pk)
+    #  item.delete()
+
+    # 삭제 후 로그아웃
+    logout(request)
+    return redirect(reverse('home'))
+
+@login_required
+def user_delete2(request, pk): # path parameter로 삭제할 Data의 pk 받기.
+    # 조회해서 삭제
+    user = User.objects.get(pk=pk)
+    user.delete()
+    logout(request)
+    return redirect(reverse('home'))

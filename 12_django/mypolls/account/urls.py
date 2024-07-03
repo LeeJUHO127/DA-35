@@ -18,5 +18,8 @@ urlpatterns = [
     path("logout", views.user_logout, name="logout"),
     path("detail", views.user_detail, name="detail"), 
     path("password_change", views.change_password, name="password_change"),
+    path("update", views.user_update, name="update"),
+    path("delete", views.user_delete, name="delete"),
+    path("delete2/<int:pk>", views.user_delete2, name="delete2"),
 ]
 # http://ip:port/account/join  -> views.create
