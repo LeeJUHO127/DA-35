@@ -36,3 +36,19 @@ class CustomUserCreateForm(UserCreationForm):
         # 지정한 field들을 제외한 나머지 field들을 form field로 정의
         # exclude = ["field명"] 
         
+## 패스워드변경 Form - PasswordChangeForm 상속해서 구현.
+from django.contrib.auth.forms import PasswordChangeForm
+class CustomPasswordChangeForm(PasswordChangeForm):
+    # 필드 재정의
+    old_password = forms.CharField(
+        label="기존 패스워드", 
+        widget=forms.PasswordInput() # 태그의 attribute 설정: attr={"attr":value}
+    )
+    new_password1 = forms.CharField(
+        label="새 패스워드", 
+        widget=forms.PasswordInput() # 태그의 attribute 설정: attr={"attr":value}
+    )
+    new_password2 = forms.CharField(
+        label="새 패스워드 확인", 
+        widget=forms.PasswordInput() # 태그의 attribute 설정: attr={"attr":value}
+    )

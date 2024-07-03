@@ -134,7 +134,7 @@ AUTH_USER_MODEL = "account.User"  # AbstractUser 클래스 이름.
 ###############################
 # 로그인 관련 설정
 ###############################
-LOGIN_URL = '/account/login'
+LOGIN_URL = '/account/login' # 로그인 안한 사용자가 @login_required View를 호출했을 때 이동.
 LOGIN_REDIRECT_URL = '/' # LoginView 사용시 로그인 성공후 이동할 페이지
 LOGOUT_REDIRECT_URL = '/'# LogoutView 사용시 로그아웃 처리후 이동할 페이지.
 

@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import User 
 
+from django.contrib.auth.decorators import login_required
+
 # 가입 처리
 ## GET  방식요청 - 입력폼을 응답
 ## POST 방식요청 - 가입 처리
@@ -103,6 +105,10 @@ def user_login(request):
                 "errorMessage":"ID나 Password를 다시 확인하세요."})
 
 ### 로그아웃 처리
+
+# View를 실행할 때 로그인 되었는지를 먼저 체크.
+## 로그인이 안되있으면 settings.LOGIN_URL  여기로 이동.
+@login_required   
 def user_logout(request):
     # login() 시 처리한 것들을 다 무효화시킴
     logout(request)
@@ -113,3 +119,33 @@ def user_detail(request):
     ## 로그인한 사용자 정보 -> request.user
     user = User.objects.get(pk=request.user.pk)
     return render(request, "account/detail.html", {"object":user})
+
+##############
+# 변경
+##############
+
+# 패스워드 변경 - GET: 폼제공, POST: 변경처리
+from django.contrib.auth.forms import PasswordChangeForm
+from .forms import CustomPasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+@login_required 
+def change_password(request):
+    if request.method == "GET":
+        # form = PasswordChangeForm(request.user)# 로그인한 User정보(old password 비교)
+        form = CustomPasswordChangeForm(request.user)
+        return render(
+            request, "account/password_change.html", 
+            {'form': form})
+    elif request.method == "POST": # 패스워드 변경
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid(): #요청파라미터 검증이 잘 되었으면
+            user = form.save()  # user의 password  update
+            # 사용자의 정보(패스워드)가 변경된것을 session에 업데이트. 안하면 로그아웃이 된다.
+            update_session_auth_hash(request, user) 
+            return redirect(reverse("account:detail"))
+        else: # 요청파라미터의 검증 실패
+            return render(
+                request, 'account/password_change.html',
+                {'form':form, 'errorMessage':'패스워드를 다시 입력하세요.'}
+            )
