@@ -75,11 +75,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+## mysql DB와 연동 
+# 1.  pip install mysqlclient
+# 2.  DB연결 설정
+# 3.  연결할 DB 설정의 key 값을 "default" 로 한다.
+# 4.  Table 생성 -> python manage.py makemigrations
+#                  python manage.py migrate
 DATABASES = {
-    'default': {
+    'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }, 
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mypolls',  # 연결할 Database 이름 - create database 로 만든 DB
+        'USER': 'scott',    # username
+        'PASSWORD': 'tiger',
+        'HOST': 'localhost',  # DBMS(mysql) 서버 IP 주소.
+        'PORT': '3306',       # Port 번호.
     }
 }
 
