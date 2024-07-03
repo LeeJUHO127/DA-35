@@ -119,7 +119,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -139,3 +138,19 @@ LOGIN_URL = '/account/login'
 LOGIN_REDIRECT_URL = '/' # LoginView 사용시 로그인 성공후 이동할 페이지
 LOGOUT_REDIRECT_URL = '/'# LogoutView 사용시 로그아웃 처리후 이동할 페이지.
 
+##############################
+# MEDIA 설정 - 파일업로드 설정
+##############################
+MEDIA_ROOT = BASE_DIR / 'media' # 업로드 파일 저장할 경로.
+MEDIA_URL = '/media/'  # 업로드된 파일을 요청할 때 사용할 url
+
+################################################
+# static 파일 설정 (js, css, image 파일들)
+#  1. app/static  아래 저장된 파일들은 자동으로 인식(개발서버-runserver)
+#  1이외 경로의 static 파일 settings.py에 등록
+################################################
+STATIC_URL = '/static/'  # 정적 파일들을 클라이어트가 요청할 때 사용할 시작 url
+STATICFILES_DIRS =[BASE_DIR / "static_files",] # app/static 이외의 경로 설정.
+STATIC_ROOT = BASE_DIR / 'static'
+# app 별로 나눠져 있는 static 파일들을 모아놓으 디렉토리. (배포할 때 필요)
+## python  manage.py  collectstatic

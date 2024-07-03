@@ -30,3 +30,11 @@ urlpatterns = [
 # http://ip:port/   ==> home.html 응답.
 
 # http://127.0.0.1:8000/polls/  welcome -> welcome은 polls/urls.py를 확인해서 View를 찾는다.
+
+### 파일 업로드 설정 - 개발서버(runserver) 에서 MEDIA_ROOT 의 
+#                                              파일에 접근할 수있도록 설정.
+from django.conf.urls.static import static
+from config import settings   # settings.py
+
+urlpatterns += static(settings.MEDIA_URL, 
+                    document_root=settings.MEDIA_ROOT)

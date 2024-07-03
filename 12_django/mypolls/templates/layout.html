@@ -51,6 +51,9 @@ template에서 Login 처리.
                     <li class="nav-item">
                         <a href="{% url 'account:logout'%}" class="nav-link">로그아웃</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{% url 'account:detail' %}" class="nav-link"><b>{{user.name}}님</b></a>
+                    </li>
                 {% else %}
                     <li class="nav-item">
                         <a href="{% url 'account:join'%}" class="nav-link">가입</a>

@@ -15,10 +15,10 @@ class User(AbstractUser):
         blank=True,   # 입력 form관련 설정 - 빈값("")이 요청파라미터로 넘어와도 검증 통과된다.(default: False)
         )
     # 파일 - 이미지파일.
-    # profile_img = models.ImageField(
-    #     verbose_name="프로필사진", 
-    #     upload_to="images/%Y/%m/%d", # 업로드된 파일 저장할 디렉토리. 패턴문자(%Y%m%d) - 업로드된 날짜 디렉토리에 저장.
-    #     null=True, blank=True
-    # )
+    profile_img = models.ImageField(
+        verbose_name="프로필사진", 
+        upload_to="images/%Y/%m/%d", # 업로드된 파일 저장할 디렉토리. 패턴문자(%Y%m%d) - 업로드된 날짜 디렉토리에 저장.
+        null=True, blank=True # 필수는 아니다.
+    )
     def __str__(self):
         return self.name

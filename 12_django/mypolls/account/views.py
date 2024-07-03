@@ -17,6 +17,7 @@ from .models import User
 #         name = request.POST["name"]
 #         email = request.POST["email"]
 #         birthday = request.POST["birthday"]
+#         profile_img = request.FILES['profile_img'] #업로드 파일Field
 #         print(username, password, name, email, birthday)
         
 #         # 검증 (등록된 username이 있는지 여부. password는 5글자 이상.)
@@ -62,6 +63,8 @@ def create(request):
         if form.is_valid():
             #정상처리 -> DB 저장 (ModelForm.save(): Model)
             user = form.save() # insert하고 insert한 값들을 가진 User(Model)객체를 반환
+            ## 가입과 동시에 로그인
+            login(request, user)            
             # 응답 : 등록->redirect방식
             return redirect(reverse('home'))
         else:
@@ -104,3 +107,9 @@ def user_logout(request):
     # login() 시 처리한 것들을 다 무효화시킴
     logout(request)
     return redirect(reverse('home'))
+
+##### 로그인한 사용자 정보 조회
+def user_detail(request):
+    ## 로그인한 사용자 정보 -> request.user
+    user = User.objects.get(pk=request.user.pk)
+    return render(request, "account/detail.html", {"object":user})

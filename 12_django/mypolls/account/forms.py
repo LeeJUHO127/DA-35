@@ -32,7 +32,7 @@ class CustomUserCreateForm(UserCreationForm):
         model = User 
         # Model Field 중 Form Field로 포함시킬 것들을 선언
         # fields = "__all__"  # 모든 Model Field들을 포함.
-        fields = ["username", "password1", "password2", "name", "email", "birthday"]
+        fields = ["username", "password1", "password2", "name", "email", "birthday", "profile_img"]
         # 지정한 field들을 제외한 나머지 field들을 form field로 정의
         # exclude = ["field명"] 
         

@@ -1,0 +1,30 @@
+<!-- account/templates/account/detail.html -->
+{% extends 'layout.html'%}
+{% block title%}My Info{% endblock title%}
+
+{% block contents%}
+<table class="table">
+    <tr>
+        <th>계정명</th>
+        <td>{{object.username}}</td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td>{{object.name}}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{object.email}}</td>
+    </tr>
+    <tr>
+        <th>생일</th>
+        <td>{{object.birthday}}</td>
+    </tr>
+</table>
+{% if object.profile_img %}
+    <img src="{{object.profile_img.url}}" width="500">
+{% else %}
+    <!-- 프로필 사진이 없습니다. -->
+    <img src="/static/account/imgs/no_profile.jpg">
+{% endif %}
+{% endblock contents%}

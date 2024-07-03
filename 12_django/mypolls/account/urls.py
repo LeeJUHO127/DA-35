@@ -16,5 +16,6 @@ urlpatterns = [
         ),
         name="login"),
     path("logout", views.user_logout, name="logout"),
+    path("detail", views.user_detail, name="detail"), 
 ]
 # http://ip:port/account/join  -> views.create
